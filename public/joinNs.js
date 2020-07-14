@@ -1,5 +1,5 @@
 function joinNs(endpoint) {
-  const nsSocket = io(`http://localhost:9000${endpoint}`);
+  nsSocket = io(`http://localhost:9000${endpoint}`);
 
   nsSocket.on("nsRoomLoad", (nsRooms) => {
     let roomList = document.querySelector(".room-list");
@@ -20,6 +20,11 @@ function joinNs(endpoint) {
         console.log("Someone clicked on ", e.target.innerText);
       });
     });
+    // Add room automatically... first time here
+    const topRoom = document.querySelector(".room");
+    const topRoomName = topRoom.innerText;
+    console.log("Top room: ", topRoomName);
+    joinRoom(topRoomName);
   });
 
   nsSocket.on("messageToClients", (msg) => {

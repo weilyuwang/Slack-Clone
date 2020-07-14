@@ -31,5 +31,9 @@ namespaces.forEach((namespace) => {
     // a socket has connected to one of our chat group namesapces
     // send that ns group info back to client
     nsSocket.emit("nsRoomLoad", namespaces[0].rooms);
+    nsSocket.on("joinRoom", (roomName) => {
+      // deal with history... once we have it
+      nsSocket.join(roomName);
+    });
   });
 });

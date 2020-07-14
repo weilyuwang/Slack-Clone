@@ -2,11 +2,13 @@
   "name": "slack",
   "version": "1.0.0",
   "description": "Slack Clone",
-  "main": "slack.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
-  "keywords": [],
+  "keywords": [
+    "socket.io"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
