@@ -1,9 +1,7 @@
 const socket = io("http://localhost:9000"); // the /  namespace
-const socket_admin = io("http://localhost:9000/admin"); // the /admin namespace
-
-socket_admin.on("welcome", (msg) => {
-  console.log(msg);
-});
+const socket1 = io("http://localhost:9000/wiki"); // the /wiki  namespace
+const socket2 = io("http://localhost:9000/mozilla"); // the /mozilla  namespace
+const socket3 = io("http://localhost:9000/linux"); // lthe /linux namespace
 
 socket.on("connect", () => {
   console.log(socket.id);
