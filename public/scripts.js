@@ -8,25 +8,11 @@ socket.on("connect", () => {
 socket.on("nsList", (nsData) => {
   console.log("The list of namespaces has arrived!");
   console.log(nsData);
+  let namespacesDiv = document.querySelector(".namespaces");
+  namespacesDiv.innerHTML = "";
+  nsData.forEach((ns) => {
+    namespacesDiv.innerHTML += `<div class="namespace" ns=${ns.namespace}>
+      <img src=${ns.img}>
+    </div>`;
+  });
 });
-
-// socket.on("messageFromServer", (dataFromServer) => {
-//   console.log(dataFromServer);
-//   socket.emit("messageToServer", { data: "Hello from the Client" });
-// });
-
-// document.querySelector("#message-form").addEventListener("submit", (event) => {
-//   event.preventDefault();
-
-//   const newMessage = document.querySelector("#user-message").value;
-//   socket.emit("newMessageToServer", { text: newMessage });
-
-//   // clear out user input
-//   var userInput = document.querySelector("#user-message");
-//   userInput.value = "";
-// });
-
-// socket.on("messageToClients", (msg) => {
-//   console.log(msg);
-//   document.querySelector("#messages").innerHTML += `<l1>${msg.text}</l1>`;
-// });
