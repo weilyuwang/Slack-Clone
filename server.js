@@ -31,6 +31,7 @@ namespaces.forEach((namespace) => {
     // a socket has connected to one of our chat group namesapces
     // send that ns group info back to client
     nsSocket.emit("nsRoomLoad", namespaces[0].rooms);
+
     nsSocket.on("joinRoom", (roomName, numberOfUsersCallback) => {
       // deal with history... once we have it
       nsSocket.join(roomName);
@@ -39,7 +40,12 @@ namespaces.forEach((namespace) => {
         .clients((error, clients) => {
           numberOfUsersCallback(clients.length);
         });
+      const nsRoom = namespaces[0].rooms.find((room) => {
+        return room.roomTitle === roomName;
+      });
+      nsSocket.emit("historyCatchUp", nsRoom.history);
     });
+
     nsSocket.on("newMessageToServer", (msg) => {
       const fullMsg = {
         text: msg.text,
@@ -47,13 +53,14 @@ namespaces.forEach((namespace) => {
         username: "dumbuser",
         avatar: "https://via.placeholder.com/30",
       };
-      console.log(fullMsg);
+
       // send this message to all the sockets that are in the room
       // THAT this socket is in
-      // the user will be in the 2nd room in the object list
-      // this is because the socket ALWAYS joins its own room on connection
-      // get the keys
       const roomTitle = Object.keys(nsSocket.rooms)[1];
+      const nsRoom = namespaces[0].rooms.find((room) => {
+        return room.roomTitle === roomTitle;
+      });
+      nsRoom.addMessage(fullMsg); // add msg to history array of this room
       io.of("/wiki").to(roomTitle).emit("messageToClients", fullMsg);
     });
   });

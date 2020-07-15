@@ -8,4 +8,13 @@ function joinRoom(roomName) {
     ).innerHTML = `${newNumberOfMembers} <span class="glyphicon glyphicon-user"></span
     >`;
   });
+  nsSocket.on("historyCatchUp", (history) => {
+    const messageUl = document.querySelector("#messages");
+    messageUl.innerHTML = "";
+    history.forEach((msg) => {
+      const newMsg = buildHTML(msg);
+      const currentMessages = messageUl.innerHTML;
+      messageUl.innerHTML = currentMessages + newMsg;
+    });
+  });
 }
