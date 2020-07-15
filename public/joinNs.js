@@ -31,12 +31,11 @@ function joinNs(endpoint) {
     // Add room automatically... first time here
     const topRoom = document.querySelector(".room");
     const topRoomName = topRoom.innerText;
-    console.log("Top room: ", topRoomName);
+
     joinRoom(topRoomName);
   });
 
   nsSocket.on("messageToClients", (msg) => {
-    console.log(msg);
     const newMsg = buildHTML(msg);
     document.querySelector("#messages").innerHTML += newMsg;
   });

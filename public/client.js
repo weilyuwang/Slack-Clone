@@ -3,8 +3,6 @@ let nsSocket = ""; // make nsSocket a global var
 
 // listen for nsList event, which contains a list of all namespaces
 socket.on("nsList", (nsData) => {
-  console.log("The list of namespaces has arrived! Check below");
-  console.log(nsData);
   let namespacesDiv = document.querySelector(".namespaces");
   namespacesDiv.innerHTML = "";
   nsData.forEach((ns) => {
