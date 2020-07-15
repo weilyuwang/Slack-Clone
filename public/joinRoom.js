@@ -8,6 +8,7 @@ function joinRoom(roomName) {
     ).innerHTML = `${newNumberOfMembers} <span class="glyphicon glyphicon-user"></span
     >`;
   });
+
   nsSocket.on("historyCatchUp", (history) => {
     const messageUl = document.querySelector("#messages");
     messageUl.innerHTML = "";
@@ -16,5 +17,16 @@ function joinRoom(roomName) {
       const currentMessages = messageUl.innerHTML;
       messageUl.innerHTML = currentMessages + newMsg;
     });
+    // scroll to the bottom of the messages div
+    messageUl.scrollTo(0, messageUl.scrollHeight);
+  });
+
+  nsSocket.on("updateMembers", (num) => {
+    document.querySelector(
+      ".curr-room-num-users"
+    ).innerHTML = `${num} <span class="glyphicon glyphicon-user"></span
+    >`;
+
+    document.querySelector(".curr-room-text").innerText = `${roomName}`;
   });
 }
