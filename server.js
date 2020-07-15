@@ -26,6 +26,10 @@ io.of("/").on("connect", (socket) => {
 namespaces.forEach((namespace) => {
   // When a socket has connected to one of the namesapces
   io.of(namespace.endpoint).on("connect", (nsSocket) => {
+    // Note that the handshake only happends once -
+    // So you can use the same username is every namespace or room
+    const username = nsSocket.handshake.query.username;
+
     // send that namespace rooms info to client
     nsSocket.emit("nsRoomLoad", namespace.rooms);
 
@@ -52,7 +56,7 @@ namespaces.forEach((namespace) => {
       const fullMsg = {
         text: msg.text,
         time: Date.now(),
-        username: "dumbuser",
+        username: username,
         avatar: "https://via.placeholder.com/30",
       };
 

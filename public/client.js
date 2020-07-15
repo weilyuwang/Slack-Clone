@@ -1,4 +1,11 @@
-const socket = io("http://localhost:9000"); // the /  namespace
+const username = prompt("What is your username?");
+
+const socket = io("http://localhost:9000", {
+  query: {
+    username: username,
+  },
+});
+
 let nsSocket = ""; // make nsSocket a global var
 
 // listen for nsList event, which contains a list of all namespaces
